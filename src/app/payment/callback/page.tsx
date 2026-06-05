@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getAuthToken } from '@/lib/api';
 
-export default function PaymentCallbackPage() {
+function PaymentCallbackContent() {
   const router = useRouter();
   const params = useSearchParams();
   const reference = params.get('reference');
@@ -29,7 +29,7 @@ export default function PaymentCallbackPage() {
       style={{ background: 'var(--bg-primary)' }}>
       <div className="w-12 h-12 rounded-full border-2 border-t-transparent animate-spin"
         style={{ borderColor: 'var(--accent-gold)', borderTopColor: 'transparent' }} />
-      <p style={{ color: 'var(--text-secondary)' }}>Verifying payment…</p>
+      <p style={{ color: 'var(--text-secondary)' }}>Verifying payment...</p>
     </div>
   );
 
@@ -67,5 +67,20 @@ export default function PaymentCallbackPage() {
         Try Again
       </button>
     </div>
+  );
+}
+
+export default function PaymentCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col items-center justify-center min-h-screen gap-4"
+        style={{ background: 'var(--bg-primary)' }}>
+        <div className="w-12 h-12 rounded-full border-2 border-t-transparent animate-spin"
+          style={{ borderColor: 'var(--accent-gold)', borderTopColor: 'transparent' }} />
+        <p style={{ color: 'var(--text-secondary)' }}>Loading...</p>
+      </div>
+    }>
+      <PaymentCallbackContent />
+    </Suspense>
   );
 }
