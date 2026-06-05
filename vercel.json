@@ -4,7 +4,8 @@
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
-    "NEXT_PUBLIC_API_URL": "@api_url"
+    "NEXT_PUBLIC_API_URL": "https://obiomastores.xyz/api"
+
   },
   "headers": [
     {
